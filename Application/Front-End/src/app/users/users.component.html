@@ -1,1 +1,23 @@
-<p>users works!</p>
+<mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z8 user-data">
+
+    <!-- ID COLUMN -->
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.ID}} </mat-cell>
+    </ng-container>
+
+    <!-- USERNAME COLUMN -->
+    <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.USERNAME}} </mat-cell>
+    </ng-container>
+
+    <!-- PRIVILEGE COLUMN-->
+    <ng-container matColumnDef="privilege">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Privilege </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.PRIVILEGE}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
