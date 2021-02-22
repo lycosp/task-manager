@@ -10,6 +10,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from '@angular/common/http';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

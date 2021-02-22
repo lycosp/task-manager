@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { ConnectionService } from '../connection.service';
 import { User } from '../../models/user.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -13,22 +13,31 @@ import { User } from '../../models/user.model';
 })
 export class UsersComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  gettingData: boolean = false;
+  user: User;
+
   dataSource: UserDataSource;
+  displayedColumns: string[] = ['id', 'username', 'privilege', 'action'];
 
-  displayedColumns: string[] = ['id', 'username', 'privilege'];
+  constructor(private connectionService: ConnectionService, private dialog: MatDialog) { }
 
-  constructor(private connectionService: ConnectionService) { }
-
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.dataSource = new UserDataSource(this.connectionService);
+  };
+
+  openDialog(arg: string, userID: string): void {
+    let data: User;
+    if (arg === 'edit') {
+      this.connectionService.getUser({id: userID}).subscribe(result => {
+        data = result;
+      });
+      console.log(data);
+    }
   }
 
 }
 
 export class UserDataSource extends DataSource<User> {
-  data = this.connectionService.getUsers();
 
   constructor(private connectionService) {
     super();

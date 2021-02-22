@@ -21,9 +21,7 @@ export class UserTableComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'username', 'privilege'];
 
-  constructor(private connectionService: ConnectionService) {
-    this.user = new User();
-  }
+  constructor(private connectionService: ConnectionService) {}
 
   getUsers(): User[] {
     let userData: User[] = [];

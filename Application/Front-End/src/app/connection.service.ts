@@ -14,8 +14,7 @@ export class ConnectionService {
     return this.http.post<User[]>('/api/users', []);
   };
 
-  // getUser(sendData): Observable<any> {
-  //   const post = this.http.post<any>(`/api/users/:userID`, sendData);
-  //   return post;
-  // };
+  getUser(sendData): Observable<any> {
+    return this.http.post(`/api/users/:userID`, sendData);
+  };
 }
