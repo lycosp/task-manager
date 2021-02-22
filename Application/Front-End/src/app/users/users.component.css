@@ -1,8 +1,8 @@
-.user-data {
-    width: 80%;
-    margin: 20px auto;
+.full-width-table {
+  width: 100%;
 }
 
-th.mat-sort-header-sorted {
-    color: black;
+.user-table {
+  width: 80%;
+  margin: 20px auto;
 }
