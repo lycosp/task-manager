@@ -9,8 +9,8 @@ const Privilege = privilege => {
 // ---------------- API CALLS ---------------- \\
 
 // get all privileges
-Privilege.getAll = results => {
-    sql.query('SELECT * FROM USER_PRIVILEGE', (err, res) => {
+Privilege.getAll = result => {
+    sql.query('SELECT * FROM USER_PRIVILEGES', (err, res) => {
         if (err) {
             results(null, err);
             return;

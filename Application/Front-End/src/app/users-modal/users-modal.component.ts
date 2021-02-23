@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/models/user.model';
+import { Privilege } from 'src/models/privilege.model';
 import { ConnectionService } from '../connection.service';
 import { DialogData } from '../users/users.component';
 
@@ -13,54 +14,67 @@ import { DialogData } from '../users/users.component';
   styleUrls: ['./users-modal.component.css'],
 })
 export class UsersModalComponent implements OnInit, OnDestroy {
-  userForm: FormGroup;
+  userForm = new FormGroup({
+    userControl: new FormControl('', Validators.required),
+    privilegeControl: new FormControl('', Validators.required),
+  });
   private ngUnsubscribe = new Subject();
 
   constructor(
     private connectionService: ConnectionService,
     public dialogRef: MatDialogRef<UsersModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
+  ) { }
 
   closeModal(): void {
     this.dialogRef.close();
   }
 
-  // get selected user
+  /**
+   * create subscription to getUser$ observable that retrives user data for selected user
+   * @param sendData passes data to getUser$ observable
+   */
   getUser(sendData): void {
-    this.connectionService
-      .getUser$(sendData)
-      .pipe(
-        map((data: User) => {
-          let user: User = {
-            id: data['ID'],
-            username: data['USERNAME'],
-            privilegeId: data['PRIVILEGE_ID'],
-            privilege: data['PRIVILEGE'],
-          };
-          return user;
-        }),
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe((results) => {
-        this.setFormData(results);
-      });
+    this.connectionService.getUser$(sendData).pipe(
+      map((data: User) => {
+        let user: User = {
+          id: data['ID'],
+          username: data['USERNAME'],
+          privilegeId: data['PRIVILEGE_ID'],
+          privilege: data['PRIVILEGE'],
+        };
+        return user;
+      }), takeUntil(this.ngUnsubscribe)
+    ).subscribe(results => {
+      this.setFormData(results);
+    });
+  }
+
+  getPrivs(): void {
+    this.connectionService.getPrivs$().pipe(
+      map((data: Privilege[]) => {
+        let privs: Privilege[] = [];
+        data.forEach((priv, i) => {
+          privs[i] = {
+            id: priv['ID'],
+            privilege: priv['PRIVILEGE']
+          }
+        });
+        return privs;
+      }), takeUntil(this.ngUnsubscribe)
+    ).subscribe(results => {
+      console.log(results);
+    })
   }
 
   setFormData(data) {
     console.log(data);
-    this.userForm = new FormGroup({
-      userControl: new FormControl(data.username, Validators.required),
-      //privilegeControl: new FormControl('', Validators.required),
-    });
+    this.userForm.controls['userControl'].setValue(data.username);
   }
 
   ngOnInit(): void {
     this.getUser(this.data.username);
-    this.userForm = new FormGroup({
-      userControl: new FormControl('', Validators.required),
-      //privilegeControl: new FormControl('', Validators.required),
-    });
+    this.getPrivs();
   }
 
   ngOnDestroy(): void {
