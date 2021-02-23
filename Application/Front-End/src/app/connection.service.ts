@@ -12,17 +12,11 @@ export class ConnectionService {
 
   constructor(private http: HttpClient) { };
 
-  getUsers(): Observable<User[]> {
+  getUsers$(): Observable<User[]> {
     return this.http.post<User[]>('/api/users', []);
   };
 
-  users$(): Observable<User[]> {
-    return this.http.post<User[]>('/api/users', []).pipe(map((data: User[]) => {
-      return data;
-    }));
-  };
-
-  getUser(sendData): Observable<any> {
-    return this.http.post(`/api/users/:userID`, sendData);
-  };
+  getUser$(sendData): Observable<User> {
+    return this.http.post<User>(`/api/users/${sendData}`, []);
+  }
 }
