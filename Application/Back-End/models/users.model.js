@@ -60,13 +60,25 @@ Users.getUser = (userID, result) => {
 Users.getPrivileges = result => {
     sql.query('SELECT * FROM USER_PRIVILEGES', (err, res) => {
         if (err) {
-            console.error('error %s', err);
-            result(null, err);
+            console.error('error ', err);
+            result(err, null);
             return;
         }
 
         result(null, res);
     });
+}
+
+Users.updateUser = (username, privilegeID, userID) => {
+    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [username, privilegeID, userID], (err, res) => {
+        if (err) {
+            console.error('error ', err);
+            result(err, null);
+            return;
+        }
+
+        result(null, res);
+    })
 }
 
 module.exports = Users;

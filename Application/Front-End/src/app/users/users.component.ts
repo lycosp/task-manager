@@ -25,6 +25,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(private connectionService: ConnectionService) { }
 
+  /**
+   * make a rest call to get a list of all users
+   */
   getUsers(): void {
     let userData: User[] = [];
     this.connectionService.getUsers().pipe(takeUntil(this.ngUnsubscribe)).subscribe(results => {
@@ -37,10 +40,8 @@ export class UsersComponent implements OnInit, OnDestroy {
         };
       }
       this.dataSource = new MatTableDataSource(userData);
-      setTimeout(() => {
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      }), 1;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 

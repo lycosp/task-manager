@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // return hello world when someone pings back-end on page '/'
 app.get('/', (req, res) => {
-    res.json({ message: "Hello World!"});
+    res.json({ message: "Hello World!" });
 });
 
 

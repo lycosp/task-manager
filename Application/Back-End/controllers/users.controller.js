@@ -15,15 +15,16 @@ exports.getAll = (req, res) => {
 
 // get one user
 exports.getUser = (req, res) => {
-    Users.getUser(req.body.id, (err, results) => {
+    const ID = req.params.userID;
+    Users.getUser(ID, (err, results) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: `Not found user with id ${req.body.id}`
+                    message: `Not found user with id ${ID}`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving user with id " + req.body.id
+                    message: "Error retrieving user with id " + ID
                 });
             }
         } else {
@@ -43,4 +44,13 @@ exports.getPrivileges = (req, res) => {
             res.send(results);
         }
     });
+};
+
+// update a selected user
+exports.update = (req, res) => {
+    if (!req.body.content) {
+        return res.status(400).send({
+            message: "Content is empty."
+        });
+    }
 };
