@@ -33,19 +33,6 @@ exports.getUser = (req, res) => {
     });
 };
 
-// get all user privileges
-exports.getPrivileges = (req, res) => {
-    Users.getPrivileges((err, results) => {
-        if (err) {
-            res.status(500).send({
-                message: err.message || "error when retrieving privileges."
-            });
-        } else {
-            res.send(results);
-        }
-    });
-};
-
 // update a selected user
 exports.update = (req, res) => {
     if (!req.body.content) {

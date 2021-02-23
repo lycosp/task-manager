@@ -7,7 +7,4 @@ module.exports = app => {
 
     // Get a single user
     app.post('/api/users/:userID', users.getUser);
-
-    // Get all privileges
-    app.post('/api/privileges', users.getPrivileges);
 };

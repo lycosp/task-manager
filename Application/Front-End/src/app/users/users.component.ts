@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { ConnectionService } from '../connection.service';
 
@@ -29,17 +29,21 @@ export class UsersComponent implements OnInit, OnDestroy {
    * make a rest call to get a list of all users
    */
   getUsers(): void {
-    let userData: User[] = [];
-    this.connectionService.getUsers().pipe(takeUntil(this.ngUnsubscribe)).subscribe(results => {
-      for (let i = 0; i < results.length; i++) {
-        userData[i] = this.user = {
-          id: results[i]['ID'],
-          username: results[i]['USERNAME'],
-          privilegeId: results[i]['PRIVILEGE_ID'],
-          privilege: results[i]['PRIVILEGE'],
-        };
-      }
-      this.dataSource = new MatTableDataSource(userData);
+    this.connectionService.users$().pipe(
+      map((data: User[]) => {
+        let userData: User[] = [];
+        data.forEach((user, i) => {
+          userData[i] = {
+            id: user['ID'],
+            username: user['USERNAME'],
+            privilegeId: user['PRIVILEGE_ID'],
+            privilege: user['PRIVILEGE']
+          };
+        });
+        return userData;
+      }), takeUntil(this.ngUnsubscribe)
+    ).subscribe(results => {
+      this.dataSource = new MatTableDataSource(results);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });

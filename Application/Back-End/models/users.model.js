@@ -5,6 +5,7 @@ const Users = users => {
     this.id = users.id;
     this.username = users.username;
     this.privilege_id = users.privilege_id;
+    this.privilege = users.privilege;
 };
 
 // ---------------- API CALLS ---------------- \\
@@ -55,19 +56,6 @@ Users.getUser = (userID, result) => {
     }
 
 };
-
-// get all available user privileges
-Users.getPrivileges = result => {
-    sql.query('SELECT * FROM USER_PRIVILEGES', (err, res) => {
-        if (err) {
-            console.error('error ', err);
-            result(err, null);
-            return;
-        }
-
-        result(null, res);
-    });
-}
 
 Users.updateUser = (username, privilegeID, userID) => {
     sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [username, privilegeID, userID], (err, res) => {
