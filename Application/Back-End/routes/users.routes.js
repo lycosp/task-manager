@@ -1,4 +1,4 @@
-// handle GET, POST, PUT, DELETE requests for users
+// handle api routes for users
 module.exports = app => {
     const users = require('../controllers/users.controller.js');
 
