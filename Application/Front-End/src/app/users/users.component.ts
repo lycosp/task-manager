@@ -71,12 +71,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       data: { head: head, username: user },
     });
 
-    dialogRef
-      .afterClosed()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((results) => {
-        console.log('dialog closed');
-      });
+    // dialogRef
+    //   .afterClosed()
+    //   .pipe(takeUntil(this.ngUnsubscribe))
+    //   .subscribe(() => {
+    //     console.log('dialog closed');
+    //   });
   }
 
   ngOnInit() {

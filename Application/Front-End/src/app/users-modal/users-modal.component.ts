@@ -47,7 +47,13 @@ export class UsersModalComponent implements OnInit, OnDestroy {
       });
   }
 
-  setFormData(data) {}
+  setFormData(data) {
+    console.log(data);
+    this.userForm = new FormGroup({
+      userControl: new FormControl(data.username, Validators.required),
+      //privilegeControl: new FormControl('', Validators.required),
+    });
+  }
 
   ngOnInit(): void {
     this.getUser(this.data.username);
