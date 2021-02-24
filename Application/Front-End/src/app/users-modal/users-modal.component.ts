@@ -107,7 +107,7 @@ export class UsersModalComponent implements OnInit, OnDestroy {
    */
   addUser(): void {
     const sendData = {
-      USERNAME: this.userForm.controls['userControl'].value,
+      USERNAME: this.userForm.controls['userControl'].value.toUpperCase(),
       PRIVILEGE_ID: this.userForm.controls['privControl'].value
     };
     this.connectionService.addUser$(sendData).pipe(takeUntil(this.ngUnsubscribe)).subscribe();

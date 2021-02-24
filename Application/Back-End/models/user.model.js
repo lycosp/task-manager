@@ -73,8 +73,7 @@ User.removeUser = (id, result) => {
 
 // add a user to the users table
 User.addUser = (user, result) => {
-    console.log(user);
-    sql.query('INSERT INTO USERS (USERNAME, PRIVILEGE_ID) VALUES (?, ?)', [user.USERNAME, user.PRIVILEGE_ID], (err, res) => {
+    sql.query('INSERT INTO USERS (USERNAME, PRIVILEGE_ID) VALUES (?, ?)', [user.USERNAME.toUpperCase(), user.PRIVILEGE_ID], (err, res) => {
         if (err) {
             console.error('error ', err);
             result(err, null);
