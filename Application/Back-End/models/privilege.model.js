@@ -1,9 +1,9 @@
 const sql = require('./db.js');
 
 // constructor
-const Privilege = privilege => {
-    this.id = privilege.id;
-    this.privilege = privilege.privilege;
+const Privilege = function(privilege) {
+    this.id = privilege.ID;
+    this.privilege = privilege.PRIVILEGE;
 };
 
 // ---------------- API CALLS ---------------- \\

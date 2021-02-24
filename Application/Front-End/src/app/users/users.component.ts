@@ -67,6 +67,10 @@ export class UsersComponent implements OnInit, OnDestroy {
       width: 'auto',
       data: { action: action, head: head, username: user },
     });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
+      this.getUsers();
+    });
   }
 
   ngOnInit() {

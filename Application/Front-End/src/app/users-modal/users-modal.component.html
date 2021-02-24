@@ -6,7 +6,6 @@
       <mat-label> Username </mat-label>
       <input matInput formControlName="userControl" />
     </mat-form-field>
-    <div></div>
     <mat-form-field>
       <mat-label> Privilege </mat-label>
       <mat-select name="privilege" formControlName="privControl">
@@ -18,7 +17,7 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="closeModal()">Cancel</button>
-    <button *ngIf="data.action !== 'delete'" mat-button>Submit</button>
+    <button *ngIf="data.action !== 'delete'" (click)="updateUser()" mat-button>Submit</button>
     <button *ngIf="data.action === 'delete'" mat-button>Delete</button>
   </div>
 </div>

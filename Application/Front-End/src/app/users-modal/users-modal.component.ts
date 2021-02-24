@@ -7,7 +7,6 @@ import { User } from 'src/models/user.model';
 import { Privilege } from 'src/models/privilege.model';
 import { ConnectionService } from '../connection.service';
 import { DialogData } from '../users/users.component';
-import { LowerCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-users-modal',
@@ -16,9 +15,11 @@ import { LowerCasePipe } from '@angular/common';
 })
 export class UsersModalComponent implements OnInit, OnDestroy {
   userForm = new FormGroup({
+    idControl: new FormControl(''),
     userControl: new FormControl('', Validators.required),
-    privControl: new FormControl('', Validators.required)
+    privControl: new FormControl('', Validators.required),
   });
+  user: User;
   privileges: Privilege[] = [];
   selectedValue: string;
   private ngUnsubscribe = new Subject();
@@ -49,10 +50,15 @@ export class UsersModalComponent implements OnInit, OnDestroy {
         return user;
       }), takeUntil(this.ngUnsubscribe)
     ).subscribe(results => {
-      this.setFormData(results);
+      this.userForm.controls['idControl'].setValue(results.id);
+      this.userForm.controls['userControl'].setValue(results.username);
+      this.userForm.controls['privControl'].setValue(results.privilegeId);
     });
   }
 
+  /**
+   * create subscription to getPrivs$ that retrieves list of privileges
+   */
   getPrivs(): void {
     this.connectionService.getPrivs$().pipe(
       map((data: Privilege[]) => {
@@ -67,13 +73,19 @@ export class UsersModalComponent implements OnInit, OnDestroy {
       }), takeUntil(this.ngUnsubscribe)
     ).subscribe(results => {
       this.privileges = results;
-      console.log(this.privileges);
-    })
+    });
   }
 
-  setFormData(data) {
-    this.userForm.controls['userControl'].setValue(data.username);
-    this.userForm.controls['privControl'].setValue(data.privilegeId);
+  updateUser(): void {
+    const sendData = {
+      ID: this.userForm.controls['idControl'].value,
+      USERNAME: this.userForm.controls['userControl'].value,
+      PRIVILEGE_ID: this.userForm.controls['privControl'].value
+    }
+    this.connectionService.updateUser$(sendData).pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe();
+    this.closeModal();
   }
 
   ngOnInit(): void {

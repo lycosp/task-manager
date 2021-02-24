@@ -21,6 +21,10 @@ export class ConnectionService {
     return this.http.post<User>(`/api/users/${sendData}`, []);
   }
 
+  updateUser$(sendData): Observable<User> {
+    return this.http.put<User>(`/api/users/${sendData.ID}`, sendData);
+  }
+
   // ------- PRIVILEGE OPERATIONS ------- \\
   getPrivs$(): Observable<Privilege[]> {
     return this.http.post<Privilege[]>('/api/privileges', []);

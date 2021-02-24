@@ -1,11 +1,10 @@
 const sql = require('./db.js');
 
 // constructor
-const User = user => {
-    this.id = user.id;
-    this.username = user.username;
-    this.privilege_id = user.privilege_id;
-    this.privilege = user.privilege;
+const User = function (user) {
+    this.ID = user.ID;
+    this.USERNAME = user.USERNAME;
+    this.PRIVILEGE_ID = user.PRIVILEGE_ID;
 };
 
 // ---------------- API CALLS ---------------- \\
@@ -24,41 +23,23 @@ User.getAll = result => {
 
 // get a single user
 User.getUser = (userID, result) => {
-    // check if userID is a number, if not go to else
-    if (Number.isInteger(Number.parseInt(userID))) {
-        sql.query('SELECT a.ID, USERNAME, PRIVILEGE_ID, PRIVILEGE FROM USERS a LEFT JOIN USER_PRIVILEGES b ON b.ID = PRIVILEGE_ID WHERE a.ID = ?', userID, (err, res) => {
-            if (err) {
-                result(err, null);
-                return;
-            }
+    sql.query('SELECT a.ID, USERNAME, PRIVILEGE_ID, PRIVILEGE FROM USERS a LEFT JOIN USER_PRIVILEGES b ON b.ID = PRIVILEGE_ID WHERE USERNAME = ?', userID, (err, res) => {
+        if (err) {
+            result(err, null);
+            return;
+        }
 
-            if (res.length) {
-                result(null, res[0]);
-                return;
-            }
+        if (res.length) {
+            result(null, res[0]);
+            return;
+        }
 
-            result({ kind: 'not_found' }, null);
-        });
-    } else {
-        sql.query('SELECT a.ID, USERNAME, PRIVILEGE_ID, PRIVILEGE FROM USERS a LEFT JOIN USER_PRIVILEGES b ON b.ID = PRIVILEGE_ID WHERE USERNAME = ?', userID, (err, res) => {
-            if (err) {
-                result(err, null);
-                return;
-            }
-
-            if (res.length) {
-                result(null, res[0]);
-                return;
-            }
-
-            result({ kind: 'not_found' }, null);
-        });
-    }
-
+        result({ kind: 'not_found' }, null);
+    });
 };
 
 User.updateUser = (id, user, result) => {
-    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [user.username, user.privilege_id, id], (err, res) => {
+    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [user.USERNAME, user.PRIVILEGE_ID, id], (err, res) => {
         if (err) {
             console.error('error ', err);
             result(err, null);
@@ -69,8 +50,8 @@ User.updateUser = (id, user, result) => {
             return;
         }
 
-        result(null, { id: id, ...user });
-    })
-}
+        result(null, { ...user });
+    });
+};
 
 module.exports = User;

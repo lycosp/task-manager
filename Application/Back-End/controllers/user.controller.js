@@ -40,16 +40,15 @@ exports.updateUser = (req, res) => {
             message: 'Content is empty.'
         });
     }
-
-    User.updateUser(req.params.userID, new Users(req.body), (err, data) => {
+    User.updateUser(req.params.userID, new User(req.body), (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: `Not found user with id ${req.params.userID}.`
+                    message: `Not found user with id ${req.body.USERNAME}.`
                 });
             } else {
                 res.status(500).send({
-                    message: `Error updating user with id ${req.params.userID}.`
+                    message: `Error updating user with id ${req.body.USERNAME}.`
                 });
             }
         } else {
