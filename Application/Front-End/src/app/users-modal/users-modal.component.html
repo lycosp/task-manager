@@ -1,8 +1,6 @@
-<mat-toolbar>
-  <h1 mat-dialog-title> {{ data.head }} </h1>
-  <h1 mat-dialog-title> {{ data.username }} </h1>
-</mat-toolbar>
 <div class="user-modal">
+  <h1 mat-dialog-title> {{ data.head }} </h1>
+  <h1 mat-dialog-title cdkFocusInitial> {{ data.username }} </h1>
   <div *ngIf="data.action === 'edit' || data.action === 'add'" mat-dialog-content [formGroup]="userForm">
     <mat-form-field>
       <mat-label> Username </mat-label>
@@ -20,6 +18,6 @@
     <button *ngIf="data.action === 'add'" (click)="addUser()" mat-button> Add </button>
     <button *ngIf="data.action === 'edit'" (click)="updateUser()" mat-button> Submit </button>
     <button *ngIf="data.action === 'delete'" (click)="removeUser()" mat-button> Delete </button>
-    <button mat-button (click)="closeModal()">Cancel</button>
+    <button mat-button mat-dialog-close >Cancel</button>
   </div>
 </div>

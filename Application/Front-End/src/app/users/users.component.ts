@@ -80,7 +80,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     const dialogRef = this.dialog.open(UsersModalComponent, {
-      width: 'auto',
+      width: '15%', height: 'auto',
       data: { action: action, head: head, username: user },
     });
 
