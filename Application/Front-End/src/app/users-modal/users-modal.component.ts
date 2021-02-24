@@ -88,6 +88,14 @@ export class UsersModalComponent implements OnInit, OnDestroy {
     this.closeModal();
   }
 
+  removeUser(): void {
+    const sendData = this.userForm.controls['idControl'].value;
+    this.connectionService.removeUser$(sendData).pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe();
+    this.closeModal();
+  }
+
   ngOnInit(): void {
     this.getUser(this.data.username);
     this.getPrivs();

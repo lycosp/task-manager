@@ -19,6 +19,6 @@
   <div mat-dialog-actions>
     <button mat-button (click)="closeModal()">Cancel</button>
     <button *ngIf="data.action !== 'delete'" (click)="updateUser()" mat-button>Submit</button>
-    <button *ngIf="data.action === 'delete'" mat-button>Delete</button>
+    <button *ngIf="data.action === 'delete'" (click)="removeUser()" mat-button>Delete</button>
   </div>
 </div>

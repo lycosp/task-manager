@@ -38,6 +38,7 @@ User.getUser = (userID, result) => {
     });
 };
 
+// update a single user
 User.updateUser = (id, user, result) => {
     sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [user.USERNAME, user.PRIVILEGE_ID, id], (err, res) => {
         if (err) {
@@ -51,6 +52,23 @@ User.updateUser = (id, user, result) => {
         }
 
         result(null, { ...user });
+    });
+};
+
+// delete a user from users table
+User.removeUser = (id, result) => {
+    sql.query('DELETE FROM USERS WHERE ID = ?', id, (err, res) => {
+        if (err) {
+            console.error('error ', err);
+            result(err, null);
+            return;
+        }
+        if (res.affectedRow === 0) {
+            result({ kind: 'not_found' }, null);
+            return;
+        }
+
+        result(null, res);
     });
 };
 

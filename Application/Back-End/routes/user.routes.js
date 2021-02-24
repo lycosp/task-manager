@@ -10,4 +10,7 @@ module.exports = app => {
 
     // Update user with userID
     app.put('/api/users/:userID', user.updateUser);
+
+    // Delete user with userID
+    app.delete('/api/users/:userID', user.removeUser);
 };

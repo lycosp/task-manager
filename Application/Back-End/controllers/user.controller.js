@@ -56,3 +56,21 @@ exports.updateUser = (req, res) => {
         }
     });
 };
+
+exports.removeUser = (req, res) => {
+    User.removeUser(req.params.userID, (err, data) => {
+        if (err) {
+            if (err.kind === 'not_found') {
+                res.status(404).send({
+                    message: `Not found user with id ${req.body.USERNAME}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: `Error removing user with id ${req.body.USERNAME}.`
+                });
+            }
+        } else {
+            res.send({ message: 'User was deleted successfully!' });
+        }
+    });
+};
