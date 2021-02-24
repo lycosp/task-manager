@@ -10,6 +10,7 @@ import { ConnectionService } from '../connection.service';
 import { UsersModalComponent } from '../users-modal/users-modal.component';
 
 export interface DialogData {
+  action: string;
   head: string;
   username: string;
 }
@@ -63,8 +64,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     let head = action === 'edit' ? 'Edit User: ' : 'Delete User: ';
 
     const dialogRef = this.dialog.open(UsersModalComponent, {
-      width: '40%',
-      data: { head: head, username: user },
+      width: 'auto',
+      data: { action: action, head: head, username: user },
     });
   }
 

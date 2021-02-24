@@ -7,6 +7,7 @@ import { User } from 'src/models/user.model';
 import { Privilege } from 'src/models/privilege.model';
 import { ConnectionService } from '../connection.service';
 import { DialogData } from '../users/users.component';
+import { LowerCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-users-modal',
@@ -16,8 +17,10 @@ import { DialogData } from '../users/users.component';
 export class UsersModalComponent implements OnInit, OnDestroy {
   userForm = new FormGroup({
     userControl: new FormControl('', Validators.required),
-    privilegeControl: new FormControl('', Validators.required),
+    privControl: new FormControl('', Validators.required)
   });
+  privileges: Privilege[] = [];
+  selectedValue: string;
   private ngUnsubscribe = new Subject();
 
   constructor(
@@ -63,13 +66,14 @@ export class UsersModalComponent implements OnInit, OnDestroy {
         return privs;
       }), takeUntil(this.ngUnsubscribe)
     ).subscribe(results => {
-      console.log(results);
+      this.privileges = results;
+      console.log(this.privileges);
     })
   }
 
   setFormData(data) {
-    console.log(data);
     this.userForm.controls['userControl'].setValue(data.username);
+    this.userForm.controls['privControl'].setValue(data.privilegeId);
   }
 
   ngOnInit(): void {

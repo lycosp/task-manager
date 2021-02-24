@@ -1,16 +1,24 @@
-<h1 mat-dialog-title>{{ data.head }} {{ data.username }}</h1>
-<div mat-dialog-content>
-  <form [formGroup]="userForm">
+<div class="user-modal">
+  <h1 mat-dialog-title> {{ data.head }} </h1>
+  <h1 mat-dialog-title> {{ data.username }} </h1>
+  <div *ngIf="data.action === 'edit'" mat-dialog-content [formGroup]="userForm">
     <mat-form-field>
       <mat-label> Username </mat-label>
-      <input matInput formControlName="userControl"/>
+      <input matInput formControlName="userControl" />
     </mat-form-field>
-    <!-- <mat-form-field>
+    <div></div>
+    <mat-form-field>
       <mat-label> Privilege </mat-label>
-
-    </mat-form-field> -->
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="closeModal()">Close</button>
+      <mat-select name="privilege" formControlName="privControl">
+        <mat-option *ngFor="let priv of privileges" [value]="priv.id">
+          {{ priv.privilege }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="closeModal()">Cancel</button>
+    <button *ngIf="data.action !== 'delete'" mat-button>Submit</button>
+    <button *ngIf="data.action === 'delete'" mat-button>Delete</button>
+  </div>
 </div>
