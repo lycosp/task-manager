@@ -1,4 +1,4 @@
-<div class="user-modal">
+<div class="user-modal center">
   <h1 mat-dialog-title> {{ data.head }} </h1>
   <h1 mat-dialog-title cdkFocusInitial> {{ data.username }} </h1>
   <div *ngIf="data.action === 'edit' || data.action === 'add'" mat-dialog-content [formGroup]="userForm">
@@ -6,7 +6,6 @@
       <mat-label> Username </mat-label>
       <input matInput formControlName="userControl" />
     </mat-form-field>
-    <div></div>
     <mat-form-field>
       <mat-label> Privilege </mat-label>
       <mat-select name="privilege" formControlName="privControl">
@@ -15,9 +14,9 @@
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button *ngIf="data.action === 'add'" (click)="addUser()" mat-button> Add </button>
-    <button *ngIf="data.action === 'edit'" (click)="updateUser()" mat-button> Submit </button>
-    <button *ngIf="data.action === 'delete'" (click)="removeUser()" mat-button> Delete </button>
-    <button mat-button mat-dialog-close >Cancel</button>
+    <button mat-stroked-button color="primary" *ngIf="data.action === 'add'" (click)="addUser()"> Add </button>
+    <button mat-button *ngIf="data.action === 'edit'" (click)="updateUser()"> Submit </button>
+    <button mat-button *ngIf="data.action === 'delete'" (click)="removeUser()"> Delete </button>
+    <button mat-button mat-dialog-close>Cancel</button>
   </div>
 </div>

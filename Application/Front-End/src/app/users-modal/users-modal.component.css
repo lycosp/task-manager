@@ -1,3 +1,12 @@
 .user-modal {
     width: auto;
 }
+
+.center {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.mat-button {
+    display: inline;
+  }
