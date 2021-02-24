@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 
 // import routes for CRUD operations, pass express into them
-require('./routes/users.routes.js')(app);
+require('./routes/user.routes.js')(app);
 require('./routes/privilege.routes.js')(app);
 
 // open nodejs server port and connection

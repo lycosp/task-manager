@@ -1,17 +1,17 @@
 const sql = require('./db.js');
 
 // constructor
-const Users = users => {
-    this.id = users.id;
-    this.username = users.username;
-    this.privilege_id = users.privilege_id;
-    this.privilege = users.privilege;
+const User = user => {
+    this.id = user.id;
+    this.username = user.username;
+    this.privilege_id = user.privilege_id;
+    this.privilege = user.privilege;
 };
 
 // ---------------- API CALLS ---------------- \\
 
 // get all users
-Users.getAll = result => {
+User.getAll = result => {
     sql.query('SELECT a.ID, USERNAME, PRIVILEGE_ID, PRIVILEGE FROM USERS a LEFT JOIN USER_PRIVILEGES b on b.ID = PRIVILEGE_ID', (err, res) => {
         if (err) {
             result(null, err);
@@ -23,7 +23,7 @@ Users.getAll = result => {
 };
 
 // get a single user
-Users.getUser = (userID, result) => {
+User.getUser = (userID, result) => {
     // check if userID is a number, if not go to else
     if (Number.isInteger(Number.parseInt(userID))) {
         sql.query('SELECT a.ID, USERNAME, PRIVILEGE_ID, PRIVILEGE FROM USERS a LEFT JOIN USER_PRIVILEGES b ON b.ID = PRIVILEGE_ID WHERE a.ID = ?', userID, (err, res) => {
@@ -57,16 +57,20 @@ Users.getUser = (userID, result) => {
 
 };
 
-Users.updateUser = (username, privilegeID, userID) => {
-    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [username, privilegeID, userID], (err, res) => {
+User.updateUser = (id, user, result) => {
+    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [user.username, user.privilege_id, id], (err, res) => {
         if (err) {
             console.error('error ', err);
             result(err, null);
             return;
         }
+        if (res.affectedRows === 0) {
+            result({ kind: 'not_found' }, null);
+            return;
+        }
 
-        result(null, res);
+        result(null, { id: id, ...user });
     })
 }
 
-module.exports = Users;
+module.exports = User;

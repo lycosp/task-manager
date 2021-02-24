@@ -1,8 +1,8 @@
-const Users = require('../models/users.model.js');
+const User = require('../models/user.model.js');
 
 // get all users
 exports.getAll = (req, res) => {
-    Users.getAll((err, results) => {
+    User.getAll((err, results) => {
         if (err) {
             res.status(500).send({
                 message: err.message || "error when retrieving users."
@@ -16,7 +16,7 @@ exports.getAll = (req, res) => {
 // get one user
 exports.getUser = (req, res) => {
     const ID = req.params.userID;
-    Users.getUser(ID, (err, results) => {
+    User.getUser(ID, (err, results) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
@@ -34,10 +34,26 @@ exports.getUser = (req, res) => {
 };
 
 // update a selected user
-exports.update = (req, res) => {
-    if (!req.body.content) {
+exports.updateUser = (req, res) => {
+    if (!req.body) {
         return res.status(400).send({
-            message: "Content is empty."
+            message: 'Content is empty.'
         });
     }
+
+    User.updateUser(req.params.userID, new Users(req.body), (err, data) => {
+        if (err) {
+            if (err.kind === 'not_found') {
+                res.status(404).send({
+                    message: `Not found user with id ${req.params.userID}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: `Error updating user with id ${req.params.userID}.`
+                });
+            }
+        } else {
+            res.send(data);
+        }
+    });
 };
