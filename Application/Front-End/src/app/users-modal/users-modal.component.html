@@ -1,6 +1,8 @@
-<div class="user-modal">
+<mat-toolbar>
   <h1 mat-dialog-title> {{ data.head }} </h1>
   <h1 mat-dialog-title> {{ data.username }} </h1>
+</mat-toolbar>
+<div class="user-modal">
   <div *ngIf="data.action === 'edit' || data.action === 'add'" mat-dialog-content [formGroup]="userForm">
     <mat-form-field>
       <mat-label> Username </mat-label>

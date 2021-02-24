@@ -1,3 +1,8 @@
 .user-modal {
     width: auto;
+    margin: 0;
+}
+
+mat-toolbar {
+    margin: 0;
 }

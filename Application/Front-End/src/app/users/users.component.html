@@ -20,9 +20,13 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
+      <th mat-header-cell *matHeaderCellDef>
+        <button mat-mini-fab color="primary" (click)="openDialog('add', '')">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </th>
       <td mat-cell *matCellDef="let row">
-        <button mat-raised-button color="primary" (click)="openDialog('edit', row.username)"> Edit </button>
+        <button mat-button color="primary" (click)="openDialog('edit', row.username)"> Edit </button>
         <button mat-button (click)="openDialog('delete', row.username)"> Delete </button>
       </td>
     </ng-container>
@@ -35,6 +39,3 @@
     [pageSizeOptions]="[10, 25, 50, 100]">
   </mat-paginator>
 </div>
-
-<!-- Button to add User -->
-<button mat-raised-button color="primary" (click)="openDialog('add', '')"> Add </button>
