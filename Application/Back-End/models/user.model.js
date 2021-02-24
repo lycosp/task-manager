@@ -39,7 +39,7 @@ User.getUser = (userID, result) => {
 
 // update a single user
 User.updateUser = (id, user, result) => {
-    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [user.USERNAME, user.PRIVILEGE_ID, id], (err, res) => {
+    sql.query('UPDATE USERS SET USERNAME = ?, PRIVILEGE_ID = ? WHERE ID = ?', [user.USERNAME.toUpperCase(), user.PRIVILEGE_ID, id], (err, res) => {
         if (err) {
             console.error('error ', err);
             result(err, null);
