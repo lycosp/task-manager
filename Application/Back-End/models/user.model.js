@@ -2,7 +2,6 @@ const sql = require('./db.js');
 
 // constructor
 const User = function (user) {
-    this.ID = user.ID;
     this.USERNAME = user.USERNAME;
     this.PRIVILEGE_ID = user.PRIVILEGE_ID;
 };
@@ -69,6 +68,19 @@ User.removeUser = (id, result) => {
         }
 
         result(null, res);
+    });
+};
+
+// add a user to the users table
+User.addUser = (user, result) => {
+    console.log(user);
+    sql.query('INSERT INTO USERS (USERNAME, PRIVILEGE_ID) VALUES (?, ?)', [user.USERNAME, user.PRIVILEGE_ID], (err, res) => {
+        if (err) {
+            console.error('error ', err);
+            result(err, null);
+            return;
+        }
+        return (null, { ...user });
     });
 };
 

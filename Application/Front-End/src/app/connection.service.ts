@@ -29,6 +29,10 @@ export class ConnectionService {
     return this.http.delete<User>(`/api/users/${sendData}`);
   }
 
+  addUser$(sendData): Observable<User> {
+    return this.http.put<User>('/api/users', sendData);
+  }
+
   // ------- PRIVILEGE OPERATIONS ------- \\
   getPrivs$(): Observable<Privilege[]> {
     return this.http.post<Privilege[]>('/api/privileges', []);

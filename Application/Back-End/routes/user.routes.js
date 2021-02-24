@@ -13,4 +13,7 @@ module.exports = app => {
 
     // Delete user with userID
     app.delete('/api/users/:userID', user.removeUser);
+
+    // Insert a user into the users table
+    app.put('/api/users', user.addUser);
 };

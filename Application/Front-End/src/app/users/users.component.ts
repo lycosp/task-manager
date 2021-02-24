@@ -60,8 +60,24 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * opens user-modal to add/delete users
+   * @param action pass add, edit or delete to determine the modal functionality
+   * @param user pass username data into user-modal
+   */
   openDialog(action: string, user: string): void {
-    let head = action === 'edit' ? 'Edit User: ' : 'Delete User: ';
+    let head;
+    switch (action) {
+      case 'add':
+        head = 'Add User'
+        break;
+      case 'edit':
+        head = 'Edit User: '
+        break;
+      case 'delete':
+        head = 'Delete User: '
+        break;
+    }
 
     const dialogRef = this.dialog.open(UsersModalComponent, {
       width: 'auto',

@@ -76,6 +76,9 @@ export class UsersModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * create a subscription to updateUser$ observable that updates a user within the users table
+   */
   updateUser(): void {
     const sendData = {
       ID: this.userForm.controls['idControl'].value,
@@ -88,11 +91,26 @@ export class UsersModalComponent implements OnInit, OnDestroy {
     this.closeModal();
   }
 
+  /**
+   * create a subscription to removeUser$ observable that removes a user from the users table
+   */
   removeUser(): void {
     const sendData = this.userForm.controls['idControl'].value;
     this.connectionService.removeUser$(sendData).pipe(
       takeUntil(this.ngUnsubscribe)
     ).subscribe();
+    this.closeModal();
+  }
+
+  /**
+   * create a subscription to addUser$ observable that adds a user to the users table
+   */
+  addUser(): void {
+    const sendData = {
+      USERNAME: this.userForm.controls['userControl'].value,
+      PRIVILEGE_ID: this.userForm.controls['privControl'].value
+    };
+    this.connectionService.addUser$(sendData).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
     this.closeModal();
   }
 

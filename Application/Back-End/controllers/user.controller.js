@@ -57,6 +57,7 @@ exports.updateUser = (req, res) => {
     });
 };
 
+// remove a user from users table
 exports.removeUser = (req, res) => {
     User.removeUser(req.params.userID, (err, data) => {
         if (err) {
@@ -71,6 +72,30 @@ exports.removeUser = (req, res) => {
             }
         } else {
             res.send({ message: 'User was deleted successfully!' });
+        }
+    });
+};
+
+// insert a user into the users table
+exports.addUser = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: 'Content is empty.'
+        });
+    }
+
+    const user = new User({
+        USERNAME: req.body.USERNAME,
+        PRIVILEGE_ID: req.body.PRIVILEGE_ID
+    });
+
+    User.addUser(user, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || 'Error occured when trying to create user.'
+            });
+        } else {
+            res.send(data);
         }
     });
 };
