@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { Privilege } from '../models/privilege.model';
 
+const HOST = 'http://localhost:3000'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,27 +16,27 @@ export class ConnectionService {
 
   // ------- USER OPERATIONS ------- \\
   getUsers$(): Observable<User[]> {
-    return this.http.post<User[]>('/api/users', []);
+    return this.http.post<User[]>(HOST + '/api/users', []);
   };
 
   getUser$(sendData): Observable<User> {
-    return this.http.post<User>(`/api/users/${sendData}`, []);
+    return this.http.post<User>(HOST + `/api/users/${sendData}`, []);
   }
 
   updateUser$(sendData): Observable<User> {
-    return this.http.put<User>(`/api/users/${sendData.ID}`, sendData);
+    return this.http.put<User>(HOST + `/api/users/${sendData.ID}`, sendData);
   }
 
   removeUser$(sendData): Observable<User> {
-    return this.http.delete<User>(`/api/users/${sendData}`);
+    return this.http.delete<User>(HOST + `/api/users/${sendData}`);
   }
 
   addUser$(sendData): Observable<User> {
-    return this.http.put<User>('/api/users', sendData);
+    return this.http.put<User>(HOST + '/api/users', sendData);
   }
 
   // ------- PRIVILEGE OPERATIONS ------- \\
   getPrivs$(): Observable<Privilege[]> {
-    return this.http.post<Privilege[]>('/api/privileges', []);
+    return this.http.post<Privilege[]>(HOST + '/api/privileges', []);
   }
 }

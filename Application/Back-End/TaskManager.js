@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 
 // setup express and headers
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
@@ -23,7 +25,7 @@ require('./routes/user.routes.js')(app);
 require('./routes/privilege.routes.js')(app);
 
 // open nodejs server port and connection
-const server = app.listen(8080, () => {
+const server = app.listen(3000, () => {
     const port = server.address().port;
 
     console.log("Server started on port %s", port);

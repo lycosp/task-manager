@@ -1,6 +1,6 @@
 module.exports = {
     HOST: "localhost",
-    USER: "TASK",
+    USER: "task",
     PASSWORD: "task_manager",
     DB: "task_manager"
 }

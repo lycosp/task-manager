@@ -1,0 +1,7 @@
+# ignore node modules in front/back-end
+./Back-End/node_modules
+./Front-End/node_modules
+
+# ignore .gitignore files
+./Back-End/.gitignore
+./Front-End/.gitignore
