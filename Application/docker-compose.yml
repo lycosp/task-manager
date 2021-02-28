@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: task_manager
+      MYSQL_USER: task
+      MYSQL_PASSWORD: task_manager
+    ports:
+      - '3005:3306'
+  web:
+    image: task-manager
+    depends_on: :
+      - db
+    port: 
+      - '5000:8080'
