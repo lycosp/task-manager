@@ -11,4 +11,5 @@ RUN npm -y install
 # get front end started
 COPY /Front-End/dist/task-manager/task-manager.war ./webapps
 
-
+# startup back-end when container is created
+RUN npm start
