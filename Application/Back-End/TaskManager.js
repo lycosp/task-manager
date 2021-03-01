@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // setup express and headers
 const app = express();
 app.use(cors({
-    origin: '*'
+    origin: 'http://localhost:4200'
 }));
 
 const PORT = 4000;
