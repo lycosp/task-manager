@@ -1,17 +1,19 @@
 version: "3.8"
 services:
   db:
-    image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_DATABASE: task_manager
-      MYSQL_USER: task
-      MYSQL_PASSWORD: task_manager
+      - MYSQL_ROOT_PASSWORD=123
+    command:
+      - mysql -uroot -p123
+    image: task-manager-db
     ports:
       - '3005:3306'
-  web:
-    image: task-manager
-    depends_on: :
+    restart: always
+  be:
+    image: task-manager-be
+    depends_on:
       - db
-    port: 
-      - '5000:8080'
+    ports: 
+      - '3000:4000'
+    links:
+      - db:db

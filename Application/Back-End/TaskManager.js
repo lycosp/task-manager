@@ -8,6 +8,8 @@ app.use(cors({
     origin: '*'
 }));
 
+const PORT = 4000;
+
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
 
@@ -25,8 +27,6 @@ require('./routes/user.routes.js')(app);
 require('./routes/privilege.routes.js')(app);
 
 // open nodejs server port and connection
-const server = app.listen(3000, () => {
-    const port = server.address().port;
-
-    console.log("Server started on port %s", port);
+const server = app.listen(PORT, () => {
+    console.log("Server started on port %s", PORT);
 });

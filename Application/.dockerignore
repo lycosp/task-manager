@@ -5,3 +5,6 @@
 # ignore .gitignore files
 ./Back-End/.gitignore
 ./Front-End/.gitignore
+
+./Back-End/Dockerfile
+./Back-End/package-lock.json

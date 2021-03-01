@@ -1,6 +1,6 @@
 module.exports = {
-    HOST: "localhost",
-    USER: "task",
-    PASSWORD: "task_manager",
+    HOST: "198.74.56.152",
+    USER: "root",
+    PASSWORD: "Ao4Zig&812ac",
     DB: "task_manager"
 }
